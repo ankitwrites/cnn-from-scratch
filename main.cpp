@@ -25,16 +25,7 @@ vector<vector<double>>convolve(const vector<vector<double>>& image, const vector
         }
     }
 
-    cout << "------------Convolved------------" << endl;
-
-    for(int i = 0; i < output.size(); i++){
-        for (int j = 0; j < output.size(); j++){
-            cout << output[i][j] << "\t";
-        }
-        cout << endl;
-    }
-
-    return {};
+    return output;
 }
 
 int main(){
@@ -57,9 +48,9 @@ int main(){
         cout << endl;
     }
 
-    auto output = convolve(image, kernel);
-
-    for(const auto& row : output){
+    cout << "--------convolve---------" << endl;
+    auto convolved = convolve(image, kernel);
+    for(const auto& row : convolved){
         for (double value : row){
             cout << value << "\t";
         }
