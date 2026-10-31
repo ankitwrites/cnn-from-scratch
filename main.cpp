@@ -78,6 +78,33 @@ vector<double>flatten(const vector<vector<double>>& pooled){
     return output;
 }
 
+vector<double> logits(const vector<double>& flattened){
+
+    int num_of_classes = 2;
+
+    vector<double> output(num_of_classes, 0);
+
+    output.reserve(num_of_classes);
+
+
+    //define weight and bias
+
+    vector<vector<double>> weight = { {1, 0, 0, 0}, {0, 0, 0, 1} };
+    vector<double> bias = { 0, 0 };
+
+    for(int i = 0; i < weight.size(); i++){
+        for(int j = 0; j < weight[1].size(); j++){
+            output[i] += weight[i][j] * flattened[j];
+        }
+    }
+
+    for(int i = 0; i < output.size(); i++){
+        output[i] += bias[i];
+    }
+
+    return output;
+}
+
 int main(){
     vector<vector<double>> image = { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16} };
     vector<vector<double>> kernel = { { 1, 0 }, { 0, 1 }};
@@ -128,6 +155,13 @@ int main(){
     cout << "-----flatten------" << endl;
     auto flattened = flatten(pooled);
     for(double val : flattened){
+        cout << val << "\t";
+    }
+    cout << endl;
+
+    cout << "--------logits--------" << endl;
+    auto logited = logits(flattened);
+    for(double val : logited){
         cout << val << "\t";
     }
     cout << endl;
