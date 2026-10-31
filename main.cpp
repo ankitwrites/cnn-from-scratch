@@ -63,6 +63,21 @@ vector<vector<double>>pool(const vector<vector<double>>& relued){
     return output;
 }
 
+vector<double>flatten(const vector<vector<double>>& pooled){
+
+    vector<double> output;
+
+    output.reserve(pooled.size() * pooled.size());
+
+    for(const auto& row : pooled){
+        for(double val : row){
+            output.push_back(val);
+        }
+    }
+
+    return output;
+}
+
 int main(){
     vector<vector<double>> image = { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16} };
     vector<vector<double>> kernel = { { 1, 0 }, { 0, 1 }};
@@ -109,6 +124,13 @@ int main(){
         }
         cout << endl;
     }
+
+    cout << "-----flatten------" << endl;
+    auto flattened = flatten(pooled);
+    for(double val : flattened){
+        cout << val << "\t";
+    }
+    cout << endl;
 
     return 0;
 }
