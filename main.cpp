@@ -1,4 +1,5 @@
 #include<iostream>
+#include<cmath>
 #include<vector>
 using namespace std;
 
@@ -105,6 +106,22 @@ vector<double> logits(const vector<double>& flattened){
     return output;
 }
 
+vector<double> softmax(const vector<double>& logited){
+    vector<double> output(logited.size(), 0);
+
+    double sum = 0.0;
+
+    for(int i = 0; i < logited.size(); i++){
+        sum += exp(logited[i]);
+    }
+
+    for(int i = 0; i < logited.size(); i++){
+        output[i] = exp(logited[i]) / sum;
+    }
+
+    return output;
+}
+
 int main(){
     vector<vector<double>> image = { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16} };
     vector<vector<double>> kernel = { { 1, 0 }, { 0, 1 }};
@@ -162,6 +179,13 @@ int main(){
     cout << "--------logits--------" << endl;
     auto logited = logits(flattened);
     for(double val : logited){
+        cout << val << "\t";
+    }
+    cout << endl;
+
+    cout << "--------softmax--------" << endl;
+    auto softmaxed = softmax(logited);
+    for(double val : softmaxed){
         cout << val << "\t";
     }
     cout << endl;
